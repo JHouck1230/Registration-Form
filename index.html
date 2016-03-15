@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Form</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-messages.js"></script>
+	<script src="/js/module.js"></script>
+	<script src="/js/controllers.js"></script>
+	<script src="/js/services.js"></script>
+</head>
+<body ng-app='ccApp' ng-controller='ccCtrl'>
+	<h1>Don't Enter Your Credit Card Information!</h1>
+	
+	<form name='userForm' novalidate>
+		<label>Email:</label>
+		<input ng-model='user.email' type="email" required>
+		<label>Password:</label>
+		<input ng-blur='checkPassword(user.password)' ng-model='user.password' type="password" required>
+		<label>Confirm Password:</label>
+		<input ng-blur='confirmPass(user.password, user.conPass)' ng-model='user.conPass' type="password" required>
+		<div ng-messages='' role='alert'>
+			<span ng-message="conPass">Passwords don't match</span>
+		</div>
+		<label>Credit Card Number:</label>
+		<input ng-blur='checkCC(user.ccnum)' ng-model='user.ccnum' type='text' required>
+		<label>Expiration:</label>
+		<input ng-model='user.expDate' type='date' required>
+		<label>CVV:</label>
+		<input ng-model='user.cvv' type='text' required>
+		<label>Country:</label>
+		<input ng-model='user.country' type="text" required>
+		<label>Zip Code:</label>
+		<input ng-model='user.zipCode' type='number' required>
+		<button ng-click='submitInfo()'>Submit!</button>
+	</form>
+
+	<pre>{{userForm | json}}</pre>
+
+</body>
+</html>

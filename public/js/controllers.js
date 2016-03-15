@@ -3,6 +3,22 @@
 var app = angular.module('ccApp');
 
 app.controller('ccCtrl', function($scope, CCService) {
+	// $scope.submitUserForm = function(forInvalid) {
+	// 	if($scope.userFrom.validCC && $scope.userForm.validPass) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+
+	$scope.checkExpDate = function(expDate) {
+		if(Date.now() < expDate) {
+			return console.log(true);
+		} else {
+			return console.log(false);
+		}
+	}
+
 	$scope.checkCC = function(ccNum) {
 		if(ccNum.match(/\D/)) return false;
 		var result = ccNum.split('').reverse().reduce((a, b, i) => {
@@ -10,7 +26,7 @@ app.controller('ccCtrl', function($scope, CCService) {
 			if(b > 9) b = b.toString().split('').reduce((c, d) => parseInt(c) + parseInt(d));
 			return a + parseInt(b);
 		}, 0) * 9;
-		return console.log((result % 10 === 0));
+		$scope.userForm.validCC = (result % 10 === 0);
 	}
 		// console.log(ccNum.match(/(34|37)/));
 		// switch (ccNum) {
@@ -35,21 +51,22 @@ app.controller('ccCtrl', function($scope, CCService) {
 		// 		break;
 		// }
 
-	$scope.checkPassword = function(password) {
-		if(password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}/)) {
-  		return true;
-  	} else {
-  		return false;
-  	}
-	}
+	$scope.passRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+	// $scope.checkPassword = function(password) {
+	// 	if(password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}/)) {
+ //  		$scope.userForm.validPass = true;
+ //  	} else {
+ //  		$scope.userForm.validPass = false;
+ //  	}
+	// }
 
-	$scope.confirmPass = function(password, conPass) {
-		if(password && conPass) {
-			return password === conPass;
-		} else {
-			return false;
-		}
-	}
+	// $scope.confirmPass = function(password, conPass) {
+	// 	if(password && conPass) {
+	// 		return password === conPass;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
 	$scope.submitInfo = function() {
 		CCService.saveInfo($scope.user)

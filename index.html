@@ -3,40 +3,54 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test Form</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 	<link rel="stylesheet" href="/css/style.css">
+	<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-messages.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 	<script src="/js/module.js"></script>
 	<script src="/js/controllers.js"></script>
 	<script src="/js/services.js"></script>
 </head>
 <body ng-app='ccApp' ng-controller='ccCtrl'>
-	<h1>Don't Enter Your Credit Card Information!</h1>
-	
-	<form name='userForm' novalidate>
-		<label>Email:</label>
-		<input ng-model='user.email' type="email" required>
-		<label>Password:</label>
-		<input ng-blur='checkPassword(user.password)' ng-model='user.password' type="password" required>
-		<label>Confirm Password:</label>
-		<input ng-blur='confirmPass(user.password, user.conPass)' ng-model='user.conPass' type="password" required>
-		<div ng-messages='' role='alert'>
-			<span ng-message="conPass">Passwords don't match</span>
+	<div class="container">
+		<div id='header'>
+			<h4>Don't Enter Your Credit Card Information!</h4>
 		</div>
-		<label>Credit Card Number:</label>
-		<input ng-blur='checkCC(user.ccnum)' ng-model='user.ccnum' type='text' required>
-		<label>Expiration:</label>
-		<input ng-model='user.expDate' type='date' required>
-		<label>CVV:</label>
-		<input ng-model='user.cvv' type='text' required>
-		<label>Country:</label>
-		<input ng-model='user.country' type="text" required>
-		<label>Zip Code:</label>
-		<input ng-model='user.zipCode' type='number' required>
-		<button ng-click='submitInfo()'>Submit!</button>
-	</form>
 
-	<pre>{{userForm | json}}</pre>
+		<form name='userForm' ng-submit='submitUserForm(userForm.$invalid)' novalidate>
+			
+			<input ng-model='userForm.email' type="email" placeholder="Email@address.com" required>
+			
+			<input ng-pattern='passRegex' ng-blur='checkPassword(userForm.password)' ng-model='userForm.password' type="text" placeholder="Password" required>
+			
+			<input ng-model='userForm.conPass' type="text" placeholder="Reenter Password" required>
+			<span ng-show='{{userForm.password !== userForm.conPass}}'></span>
 
+			<span ng-show='{{user.password !== user.conPass}}' ng-messages='userForm.conPass.$error' role='alert'>
+				<span ng-message="conPass">Passwords do not match!</span>
+			</span>
+			
+			<input ng-blur='checkCC(userForm.ccnum)' ng-model='userForm.ccnum' type='text' placeholder="Credit Card Number" required>
+			
+			<label>Expiration Date:</label>
+			<input ng-blur='checkExpDate(userForm.expDate)' ng-model='userForm.expDate' type='date' required>
+			
+			<input ng-model='userForm.cvv' type='text' placeholder="CVV" required>
+			
+			<input ng-model='userForm.country' maxlength='2' type="text" placeholder="Country (e.g. US)" required>
+			
+			<input ng-model='userForm.zipCode' type='text' placeholder="Zip Code" required>
+			
+			<button ng-click='submitInfo()' class="btn waves-effect waves-light" type="submit" name="action">Submit
+			  <i class="material-icons right">send</i>
+		  </button>
+		
+		</form>
+
+		<pre>{{userForm | json}}</pre>
+	</div>
 </body>
 </html>

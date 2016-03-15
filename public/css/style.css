@@ -1,0 +1,8 @@
+#header {
+  background-color: gainsboro;
+  padding: 20px 30px;
+}
+
+body.ng-scope {
+  background-color: azure;
+}

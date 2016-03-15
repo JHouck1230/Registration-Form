@@ -27,6 +27,7 @@ app.controller('ccCtrl', function($scope, CCService) {
 			return a + parseInt(b);
 		}, 0) * 9;
 		$scope.userForm.validCC = (result % 10 === 0);
+		console.log($scope.userForm.validCC);
 	}
 		// console.log(ccNum.match(/(34|37)/));
 		// switch (ccNum) {

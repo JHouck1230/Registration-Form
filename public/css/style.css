@@ -6,3 +6,7 @@
 body.ng-scope {
   background-color: azure;
 }
+
+span {
+	color: red;
+}

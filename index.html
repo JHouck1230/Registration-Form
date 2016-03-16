@@ -24,70 +24,42 @@
 			
 			<div>
 				<input ng-model='user.email' name='email' type="email" placeholder="Email@address.com" required>
-				
-				<span ng-show='userForm.$submitted' ng-messages='userForm.email.$error' role='alert'>
-					<span ng-message="required">Please enter an email!</span>
-				</span>
-			</div> 
 
 			<div>
 				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.password' name='password' type="text" placeholder="Password" required>
 
 				<span ng-show='!passRegex'>Password must contain: 6 characters, 1 uppercase letter, 1 lowercase letter, 1 number.</span>
-				<span ng-show='useForm.$submitted' ng-messages='userForm.password.$error' role='alert'>
-					<span ng-message="required">Please enter a password!</span>
-				</span>
 			</div>
 			
 			<div>
 				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.conPass' name='conPass' type="text" placeholder="Reenter Password" required>
 
-				<span ng-show='useForm.$submitted' ng-messages='userForm.conPass.$error' role='alert'>
-					<span ng-message="required">Please enter a password!</span>
-					<span ng-show='user.password !== user.conPass'>Passwords don't match!</span>
-				</span>
+				<span ng-show='userForm.conPass.notMatch && userForm.conPass.$touched'>Passwords don't match!</span>
 			</div>
 			
 			<div>
 				<input ng-change='checkCC()' ng-model='user.ccNum' name=ccNum type='text' placeholder="Credit Card Number" required>
 						
-				<span ng-show='userForm.$submitted' ng-messages='userForm.ccNum.$error' role='alert'>
-					<span ng-message="required">Please enter a credit card number!</span>
-					<span ng-show="luhn">Please enter a valid credit card number!</span>
-				</span>
+				<span ng-show="userForm.ccNum.luhnError">Please enter a valid credit card number!</span>
 			</div>
 
 			<div>
 				<label>Expiration Date:</label>
-				<input ng-blur='checkExpDate(user.expDate)' ng-model='user.expDate' name='expDate' type='date' required>
+				<input ng-change='checkExpDate(user.expDate)' ng-model='user.expDate' name='expDate' type='date' required>
 				
-				<span ng-show='userForm.$submitted' ng-messages='userForm.expDate.$error' role='alert'>
-					<span ng-message="required">Please enter an expiration date!</span>
-				</span>
+				<span ng-show="userForm.expDate.validDate">Please enter an expiration date!</span>
 			</div>
 
 			<div>
 				<input ng-model='user.cvv' name='cvv' type='text' placeholder="CVV" required>
-				
-				<span ng-show='userForm.$submitted' ng-messages='userForm.cvv.$error' role='alert'>
-					<span ng-message="required">Please enter a CVV!</span>
-				</span>
 			</div>
 
 			<div>
 				<input ng-model='user.country' name='country' maxlength='2' type="text" placeholder="Country (e.g. US)" required>
-				
-				<span ng-show='userForm.$submitted' ng-messages='userForm.country.$error' role='alert'>
-					<span ng-message="required">Please enter a country!</span>
-				</span>
 			</div>
 			
 			<div>
 				<input ng-model='user.zipCode' name='zipCode' type='text' placeholder="Zip Code" required>
-				
-				<span ng-show='userForm.$submitted' ng-messages='userForm.zipCode.$error' role='alert'>
-					<span ng-message="required">Please enter a zip code!</span>
-				</span>
 			</div>
 			
 			
@@ -99,7 +71,6 @@
 		
 		</form>
 
-		<pre>{{userForm | json}}</pre>
 	</div>
 </body>
 </html>

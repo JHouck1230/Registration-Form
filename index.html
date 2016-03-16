@@ -26,13 +26,13 @@
 				<input ng-model='user.email' name='email' type="email" placeholder="Email@address.com" required>
 
 			<div>
-				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.password' name='password' type="text" placeholder="Password" required>
+				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.password' name='password' type="password" placeholder="Password" required>
 
 				<span ng-show='!passRegex'>Password must contain: 6 characters, 1 uppercase letter, 1 lowercase letter, 1 number.</span>
 			</div>
 			
 			<div>
-				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.conPass' name='conPass' type="text" placeholder="Reenter Password" required>
+				<input ng-pattern='passRegex' ng-change='confirmPass()' ng-model='user.conPass' name='conPass' type="password" placeholder="Reenter Password" required>
 
 				<span ng-show='userForm.conPass.notMatch && userForm.conPass.$touched'>Passwords don't match!</span>
 			</div>
